@@ -1,7 +1,7 @@
 import pandas as pd
 from amadeus import Client, ResponseError
 import sqlite3
-import flightGroupClass as g
+import flightGroupClassMk2 as g
 
 
 #sets airport codes 
