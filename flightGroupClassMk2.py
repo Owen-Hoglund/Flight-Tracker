@@ -6,7 +6,7 @@ import pickle
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------
 
-class FlightGroup:
+class flightGroup:
 
     # Class Variables
     #------------------------------------------------------------------
@@ -88,3 +88,8 @@ class FlightGroup:
         #print("Beginning save method" + "\n")
         with open('flightGroupData.pkl', 'ab') as FGhandler:
             pickle.dump(self, FGhandler)
+
+    def printinfo(self):
+        for travelers in self.groupOrigins:
+            print(str(travelers[1]) + "  Travelers from " + travelers[0])
+        print("Destination: " + self.destination)

@@ -1,7 +1,6 @@
 import pandas as pd
 from amadeus import Client, ResponseError
 import sqlite3
-import flightGroupClassMk2 as g
 
 
 #sets airport codes 
@@ -18,8 +17,8 @@ c = conn.cursor()
 
 #authenticates API requests
 amadeus = Client(
-    client_id='EwzXZuAVbWHGL4s3u1uQaHAsmOkaOOSA',
-    client_secret='xDIAHTjR2hy8dK53'
+    client_id='',
+    client_secret=''
 )
 
 #makes API request using amadeus' library (I think it is some kind of blend with the requests library because syntax at end of methods seems similar)

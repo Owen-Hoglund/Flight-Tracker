@@ -1,22 +1,22 @@
-from flightGroupClassMk2 import FlightGroup
+from flightGroupClassMk2 import flightGroup
 
 origin_Sample = [('MSP', 3),('YYZ', 1),('BOS', 2)]
 def create_input_save():
-    tempGroup = FlightGroup.from_input()
+    tempGroup = flightGroup.from_input()
     tempGroup.save()
     temp = tempGroup.groupOrigins
     del tempGroup
     return temp
 
 def load_file_return():
-    tempGroup = FlightGroup.from_file()
+    tempGroup = flightGroup.from_file()
     temp = tempGroup.groupOrigins
     del tempGroup
     return temp
 
 
 def create_sample_save():
-    tempGroup = FlightGroup('MAD', '12-01-2022', '12-15-2022', 14, origin_Sample)
+    tempGroup = flightGroup('MAD', '12-01-2022', '12-15-2022', 14, origin_Sample)
     tempGroup.save()
     temp = tempGroup.groupOrigins
     del tempGroup
@@ -42,5 +42,6 @@ def origin_list_test_protocol(choice):
         del copy2
 
     else:
+        print(copy2)
         print("Test Failure")
 

@@ -1,27 +1,28 @@
-import flightGroupClassMk2 as fg
 import pickle
+from flightGroupClassMk2 import flightGroup
 
-class groupHandler:
+class handler:
 
-    def __init__(self, group):
-        self.group = group
-    
-    @classmethod
-    def from_pickle(cls):
-        groups = []
-        with open('flightGroupData.pkl', 'rb') as unpickler:
+    def __init__(self, group=None):
+        if group == None:
+            self.group = []
+        else:
+            self.group = group
+
+    def load(self):
+        with open('flightGroupData.pkl', 'rb') as filehandler:
             while True:
                 try:
-                    yield pickle.load(unpickler)
-                except EOFError:
-                        break
-        cls.group = groups
-        return (groups)
+                     self.group.append(pickle.load(filehandler))
+                except (EOFError, pickle.UnpicklingError):
+                    print("End of file Reached")
+                    break
+    
+    @staticmethod
+    def printall(self):
+        for members in self.group:
+            print("-----------GROUP-------------")
+            members.printinfo()
 
-    @classmethod
-    def reload(self):
-        self.group = self.from_pickle()
 
-    def PrintAll(self):
-        for groups in self.group:
-            groups.printinfo()
+    
