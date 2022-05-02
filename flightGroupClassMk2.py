@@ -23,12 +23,12 @@ class flightGroup:
         # The __init__ function is the primary constructor for the class
 
         self.destination = destination # The Destination the Flight Group is heading to
-        self.departDate = departDate # The date the group would like to depart 
+        self.departDate = departDate # The date the group would like to depart
         self.returnDate = returnDate # The date the group would like to return
         self.stayRange = stayRange # the length the group would like to stay
 
         # A note on the above attributes. At current time stayrange will do nothing
-        # eventually it should be saved, likely as a string, such that the user can 
+        # eventually it should be saved, likely as a string, such that the user can
         # write x-y where (x,y) is a range of days (3 to 10 days).
         
         # Group origins will be a list, with elements in the form (str, int)
@@ -39,7 +39,7 @@ class flightGroup:
         if groupOrigins is None:
             self.groupOrigins = []
         else: self.groupOrigins = groupOrigins
-    
+
     #------------------------------------------------------------------------------------------
     
     @classmethod

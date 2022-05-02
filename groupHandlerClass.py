@@ -23,6 +23,3 @@ class handler:
         for members in self.group:
             print("-----------GROUP-------------")
             members.printinfo()
-
-
-    
