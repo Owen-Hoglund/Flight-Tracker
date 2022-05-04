@@ -19,13 +19,14 @@ class flightGroup:
 
     # Constructor Methods
     #----------------------------------------------------------------------------------------------------------------------------------------------------
-    def __init__(self, destination, departDate, returnDate, stayRange, groupOrigins=None):
+    def __init__(self, destination, departDate, returnDate, stayRange, email, groupOrigins=None):
         # The __init__ function is the primary constructor for the class
 
         self.destination = destination # The Destination the Flight Group is heading to
         self.departDate = departDate # The date the group would like to depart
         self.returnDate = returnDate # The date the group would like to return
         self.stayRange = stayRange # the length the group would like to stay
+        self.email = email # email address associated with the group
 
         # A note on the above attributes. At current time stayrange will do nothing
         # eventually it should be saved, likely as a string, such that the user can
@@ -41,30 +42,6 @@ class flightGroup:
         else: self.groupOrigins = groupOrigins
 
     #------------------------------------------------------------------------------------------
-    
-    @classmethod
-    def from_input(cls):
-        # from_input is an alternative constructor that allows the user to populate an instance of the class with input 
-        # as opposed to instatiating it inline as one normally would. " instanceVariable = FlightGroup.from_input " 
-        # For more detail on this process refer to file "Methods - Class, Static, Regular" from the notes included 
-        
-        # Following loop generates the list "origins" to be passed into 
-        temp = []
-        while input("Add travelers in this Group? y/n: ") != 'n': # this loop is the piece that allows the user to input multiple airports as origins
-            temp.append([input("Enter departing Airport Code:  "), input("How many travelers will be departing from this airport:  ")])
-        
-        #Returns the necessary arguments to instantiate the class instance
-        return cls(
-            input("Enter destination Airport Code:  "),
-            # Currently the following three do nothing so we are going to automatically pass a useless integer in. 
-            #input("Enter the Date you would like to depart:   "),
-            "December 10th",
-            #input("Enter the Date you would like to return:   "),
-            "December 20th",
-            #input("How many days would you like to stay:    "),
-            10,
-            temp
-        )
 
     # The following method will populate an instance of a class from a pickle file. For now, it will not be used
     # I believe the best course of action is to handle this from the handler
@@ -95,3 +72,4 @@ class flightGroup:
         print("Destination: " + self.destination)
         print("Date of Departure: " + self.departDate)
         print("Date of Return: " + self.returnDate)
+        print("Email: " + self.email)

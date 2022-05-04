@@ -1,6 +1,7 @@
 from flightGroupClassMk2 import flightGroup
 import random
 from datetime import date, timedelta
+import string
 
 # Creates a randomized flight group
 #----------------------------------------------------------------------------------------------------------------------
@@ -10,8 +11,9 @@ def random_group_maker():
     temp_departure = random_date_generator()
     temp_return = date_finder(temp_departure , temp_stayRange)
     date_format = time_formatter(temp_departure, temp_return)
+    email = email_generator()
 
-    return flightGroup(orig_dest[0], date_format[0], date_format[1], temp_stayRange, orig_dest[1])
+    return flightGroup(orig_dest[0], date_format[0], date_format[1], temp_stayRange, email, orig_dest[1])
 #----------------------------------------------------------------------------------------------------------------------
 
 
@@ -61,10 +63,22 @@ def origin_destination():
 
 
 
-# Takes a date and returns it as a string in the format YYYY-MM-DD
+# Takes two dates and returns them as a tupple of strings in the format YYYY-MM-DD
 #----------------------------------------------------------------------------------------------------------------------
 def time_formatter(depart, returndate):
     d = depart.strftime("%Y") + "-" + depart.strftime("%m") + "-" + depart.strftime("%d")
     r = returndate.strftime("%Y") + "-" + returndate.strftime("%m") + "-" + returndate.strftime("%d")
     return [d,r]
+#----------------------------------------------------------------------------------------------------------------------
+
+# Generates a random email
+#----------------------------------------------------------------------------------------------------------------------
+def email_generator():
+    temp_email = ''
+    x = random.randint(4, 12)
+    for i in range(x):
+        temp_email += random.choice(string.ascii_letters)
+    temp_email += '@gmail.com'
+    return temp_email
+
 #----------------------------------------------------------------------------------------------------------------------
