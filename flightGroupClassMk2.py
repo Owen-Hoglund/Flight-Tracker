@@ -93,3 +93,5 @@ class flightGroup:
         for travelers in self.groupOrigins:
             print(str(travelers[1]) + "  Travelers from " + travelers[0])
         print("Destination: " + self.destination)
+        print("Date of Departure: " + self.departDate)
+        print("Date of Return: " + self.returnDate)

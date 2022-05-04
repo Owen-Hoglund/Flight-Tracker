@@ -1,4 +1,5 @@
 from flightGroupClassMk2 import flightGroup
+import exampleGroupGenerator
 
 origin_Sample = [('MSP', 3),('YYZ', 1),('BOS', 2)]
 def origin_list_test_protocol(choice):
@@ -41,7 +42,8 @@ def load_file_return():
 
 
 def create_sample_save():
-    tempGroup = flightGroup('MAD', '12-01-2022', '12-15-2022', 14, origin_Sample)
+    orig_dest_pair = exampleGroupGenerator.random_group_maker()
+    tempGroup = flightGroup(orig_dest_pair[1], '12-01-2022', '12-15-2022', 14, orig_dest_pair[0])
     tempGroup.save()
     temp = tempGroup.groupOrigins
     del tempGroup
