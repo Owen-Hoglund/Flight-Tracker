@@ -8,9 +8,9 @@ import string
 def random_group_maker():
     orig_dest = origin_destination()
     temp_stayRange = range_generator()
-    temp_departure = random_date_generator()
-    temp_return = date_finder(temp_departure , temp_stayRange)
-    date_format = time_formatter(temp_departure, temp_return)
+    temp_dateLowerBound = random_date_generator()
+    temp_dateUpperBound = date_finder(temp_dateLowerBound , temp_stayRange)
+    date_format = time_formatter(temp_dateLowerBound, temp_dateUpperBound)
     email = email_generator()
 
     return flightGroup(orig_dest[0], date_format[0], date_format[1], temp_stayRange, email, orig_dest[1])
@@ -26,12 +26,11 @@ def random_date_generator():
 #----------------------------------------------------------------------------------------------------------------------
 
 
-
 # Generates a date n days after a given date, where n is the length of stay of the trip
 # limited by 30 days for now, for easier data crunching, but not restricted by the class itsself
 #----------------------------------------------------------------------------------------------------------------------
-def date_finder(departDate, stayRange):
-    return departDate + timedelta(days = stayRange[1] + random.randint(1, 30))
+def date_finder(dateLowerBound, stayRange):
+    return dateLowerBound + timedelta(days = stayRange[1] + random.randint(1, 30))
 #----------------------------------------------------------------------------------------------------------------------
 
 
@@ -66,9 +65,9 @@ def origin_destination():
 
 # Takes two dates and returns them as a tupple of strings in the format YYYY-MM-DD
 #----------------------------------------------------------------------------------------------------------------------
-def time_formatter(depart, returndate):
-    d = depart.strftime("%Y") + "-" + depart.strftime("%m") + "-" + depart.strftime("%d")
-    r = returndate.strftime("%Y") + "-" + returndate.strftime("%m") + "-" + returndate.strftime("%d")
+def time_formatter(dateLowerBound, dateUpperBound):
+    d = dateLowerBound.strftime("%Y") + "-" + dateLowerBound.strftime("%m") + "-" + dateLowerBound.strftime("%d")
+    r = dateUpperBound.strftime("%Y") + "-" + dateUpperBound.strftime("%m") + "-" + dateUpperBound.strftime("%d")
     return [d,r]
 #----------------------------------------------------------------------------------------------------------------------
 
