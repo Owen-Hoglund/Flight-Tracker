@@ -4,8 +4,8 @@ import pandas as pd
 from amadeus import Client, ResponseError
 
 #sets airport codes 
-origin_airport = 'MAD'
-destination_airport =  'ATH'
+origin_airport = 'BOS'
+destination_airport =  'MSP'
 
 #authenticates API requests
 amadeus = Client(
@@ -18,7 +18,7 @@ try:
     response = amadeus.shopping.flight_offers_search.get( #this is a method they have written themselves to access the flight offers search API endpoint (perhaps language here isnt correct but you get the idea)
         originLocationCode= origin_airport, # self explanatory
         destinationLocationCode=destination_airport, # self explanatory
-        departureDate='2022-11-01', # self explanatory also I should go back later and turn this into a variable
+        departureDate='2022-01-05', # self explanatory also I should go back later and turn this into a variable
         adults=1 # self explanatory 
         )
 

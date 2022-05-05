@@ -25,3 +25,27 @@ from_input method for flightGroupClass
             10,
             temp
         )
+
+
+from_file method for flightGroupClass
+    @classmethod
+    def from_file(cls):
+        with open('flightGroupData.pkl', 'rb') as FGhandler:
+            a = pickle.load(FGhandler)
+            print("\n")
+            return a
+
+
+A unit test for the from_file method that used to be included in flightGroupClassMk2
+
+def test_from_file(self):
+        result = flightGroupClassMk2.flightGroup.from_file()
+        self.assertIsInstance(result.destination, str)
+        self.assertIsInstance(result.departDate, str)
+        self.assertIsInstance(result.returnDate, str)
+        self.assertIsInstance(result.stayRange, int)
+     
+        self.assertIsInstance(result, flightGroupClassMk2.flightGroup)
+
+        # Currently this will only work if the pkl file is not empty
+        # I should later add a check to make certain that the file isnt empty before checking

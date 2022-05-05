@@ -7,7 +7,7 @@ import string
 #----------------------------------------------------------------------------------------------------------------------
 def random_group_maker():
     orig_dest = origin_destination()
-    temp_stayRange = random.randint(1, 30)
+    temp_stayRange = range_generator()
     temp_departure = random_date_generator()
     temp_return = date_finder(temp_departure , temp_stayRange)
     date_format = time_formatter(temp_departure, temp_return)
@@ -28,9 +28,10 @@ def random_date_generator():
 
 
 # Generates a date n days after a given date, where n is the length of stay of the trip
+# limited by 30 days for now, for easier data crunching, but not restricted by the class itsself
 #----------------------------------------------------------------------------------------------------------------------
 def date_finder(departDate, stayRange):
-    return departDate + timedelta(days = stayRange)
+    return departDate + timedelta(days = stayRange[1] + random.randint(1, 30))
 #----------------------------------------------------------------------------------------------------------------------
 
 
@@ -71,6 +72,8 @@ def time_formatter(depart, returndate):
     return [d,r]
 #----------------------------------------------------------------------------------------------------------------------
 
+
+
 # Generates a random email
 #----------------------------------------------------------------------------------------------------------------------
 def email_generator():
@@ -82,3 +85,13 @@ def email_generator():
     return temp_email
 
 #----------------------------------------------------------------------------------------------------------------------
+
+
+
+# Generates a tuple of integers (x, y) that represent the range of stay length the group is interested in (e.g 5-10 days)
+#----------------------------------------------------------------------------------------------------------------------
+def range_generator():
+    x = random.randint(1, 30)
+    y = random.randint(1, 30)
+    return (min(x, y), max(x, y))
+    
