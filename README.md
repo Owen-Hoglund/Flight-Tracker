@@ -19,3 +19,23 @@ basis. The simple example would be that if a company has a conference for which:
 
 Then they can use their database of employees, and their corresponding home airports, to determine the most cost effective date for that
 conference within a certain range (a given quarter or month, for example).
+
+## Development Instructions
+Run `MinorTestEnvironmentMk2.py`:
+
+output: 
+```
+Group Information: 
+---------------------------------------------------------------------
+Your group is interested in traveling to: BOS
+Sometime between 2022-12-16 and 2023-01-22
+And you are interested in a stay of 5 to 17 days
+Your contact email address is: ZdGe@gmail.com
+---------------------------------------------------------------------
+Traveler origins:
+9  Travelers from SYD
+3  Travelers from HRM
+4  Travelers from AHE
+6  Travelers from YYZ
+9  Travelers from PVG
+```
