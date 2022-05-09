@@ -16,7 +16,9 @@ class flightGroup:
             self.groupOrigins = []
         else: self.groupOrigins = groupOrigins
 
-    
+    #TODO: at which point to throw an exception for invalid input?
+    #   before setting the attribute (self.destination = destionation, etc.)
+    #   or somewhere around save()?    
 
     # Save pickles the instance
     #----------------------------------------------------------------------------------------------------------------------------------------------------
