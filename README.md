@@ -20,8 +20,14 @@ basis. The simple example would be that if a company has a conference for which:
 Then they can use their database of employees, and their corresponding home airports, to determine the most cost effective date for that
 conference within a certain range (a given quarter or month, for example).
 
-## Development Instructions
-Run `MinorTestEnvironmentMk2.py`:
+## Development Notes
+- `flightGroupClassMk2` contains the model for a `flightGroup` and the necessary attributes.
+
+- `exampleGroupGenerator.py` produces a sample `flightGroup` to test out the program with.
+
+- `flightGroupService.py` contains validator functions to ensure clean input for a new `flightGroup`.
+
+Running `MinorTestEnvironmentMk2.py`:
 
 output: 
 ```
