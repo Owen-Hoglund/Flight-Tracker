@@ -27,6 +27,7 @@ def em_isValid(email):
         return False
 
 # stayRange test cases
+# TODO: check for negatives
 valid_stayRange1 = (1, 2)
 valid_stayRange2 = (5, 10)
 valid_stayRange3 = (29, 30)
@@ -37,7 +38,7 @@ invalid_stayRange3 = (20, 0)
 testcase_stayRanges = [valid_stayRange1, valid_stayRange2, valid_stayRange3, invalid_stayRange1, invalid_stayRange2, invalid_stayRange3]
 
 def stayRange_isValid(stayRange):
-
+    # if [1] - [0] > 20 return false (for maximum stay length)
     # stayRange is a tuple
     if (stayRange[0] > stayRange [1]):
         print("Second value must be greater than first value")
@@ -65,31 +66,22 @@ def dateLowerUpper_areValid(dateLowerBound, dateUpperBound):
     pass
 
 if __name__ == '__main__':
+    # running email test cases
+    for email in testcase_emails:
+        if(em_isValid(email)):
+            print("Valid email: " + email)
+            
+        else:
+            print("Invalid email: " + email)
 
-    i = 0
-    length = len(testcase_emails)
+    # running stayRange test cases
+    for stayRange in testcase_stayRanges:
+        if(stayRange_isValid(stayRange)):
+            print('Valid stayRange: {0}'.format(stayRange))
+        else:
+            print('Invalid stayRange: {0}'.format(stayRange))
 
-    while i < length:
-
-        if (em_isValid(testcase_emails[i])) is True:
-            print("Valid email: " + testcase_emails[i])
-
-        elif (em_isValid(testcase_emails[i])) is False:
-            print("Invalid email: " + testcase_emails[i])
-        i += 1
-
-    i = 0
-    length = len(testcase_stayRanges)
-
-    while i < length:
-        if (stayRange_isValid(testcase_stayRanges[i])) is False:
-            print('Invalid stayRange: {0}'.format(testcase_stayRanges[i]))
-
-        elif (stayRange_isValid(testcase_stayRanges[i])) is True:
-            print('Valid stayRange: {0}'.format(testcase_stayRanges[i]))
-
-        i += 1
-
+    # playing with dates
     today = date.today()
     print(today)
     print('Today: ' + str(today))
@@ -99,29 +91,34 @@ if __name__ == '__main__':
     fourthOfJuly = datetime.date(2022, 7, 4) # no leading zeroes here
     print('Fourth of July:  {}'.format(fourthOfJuly))
 
+# https://www.programiz.com/python-programming/datetime/strftime
+
 # - dateLowerBound
     # - The beginning of the range of dates the group is interested in travelling
-    # - [ ] Must be a string in the format YYYY-MM-DD
-    # - [ ] Must be at least one day in the future (current date + one day)
-    # - [ ] Must be within a year of the current date
-    # - [ ] MM must be a valid entry
-    #     - [ ] Not greater than 12
-    #     - [ ] Not less than 1
-    #     - [ ] Months 1-9 must be formatted with a prefixed zero (sept = 09, sept != 9)
-    # - [ ] DD Must be a valid entry
-    #     - [ ] Not greater than the number of days in the associated month
-    #     - [ ] Not less than zero
-    #     - [ ] Same prefix zero rule as months (01, 02, etc,.)
+    # - Must be a string in the format YYYY-MM-DD
+        # either RegEx or a way to validate via datetime
+    # - Must be at least one day in the future (current date + one day)
+        # datetime.timedelta
+    # - Must be within a year of the current date
+    # - MM must be a valid entry
+    #     -Not greater than 12
+    #     -Not less than 1
+    #     -Months 1-9 must be formatted with a prefixed zero (sept = 09, sept != 9)
+    # - DD Must be a valid entry
+    #     - Not greater than the number of days in the associated month
+    #     - Not less than zero
+    #     - Same prefix zero rule as months (01, 02, etc,.)
 
 # - dateUpperBound
 #     - The end of the range of dates the group is interested in travelling
-#     - [ ] Must be a string in the format YYYY-MM-DD
-#     - [ ] Must be at least dateLowerBound + the upper bound of the stayRange
-#     - [ ] MM must be a valid entry
-#         - [ ] Not greater than 12
-#         - [ ] Not less than 1
-#         - [ ] Months 1-9 must be formatted with a prefixed zero (sept = 09, sept != 9)
-#     - [ ] DD Must be a valid entry
-#         - [ ] Not greater than the number of days in the associated month
-#         - [ ] Not less than zero
-#         - [ ] Same prefix zero rule as months (01, 02, etc,.)
+#     - Must be a string in the format YYYY-MM-DD
+#     - Must be at least dateLowerBound + the upper bound of the stayRange
+        # datetime.timedelta
+#     - MM must be a valid entry
+#         - Not greater than 12
+#         - Not less than 1
+#         - Months 1-9 must be formatted with a prefixed zero (sept = 09, sept != 9)
+#     - DD Must be a valid entry
+#         - Not greater than the number of days in the associated month
+#         - Not less than zero
+#         - Same prefix zero rule as months (01, 02, etc,.)
