@@ -40,12 +40,12 @@ def date_finder(dateLowerBound, stayRange):
 def origin_destination():
     # Expandable with however many iata codes youd like, but this should be sufficient for testing purposes
 
-    airport_list = ['MSP', 'YYZ','BOS','AHE','GIG','IXR','LED','NIO','HRM','MSY','PVG','SYD','MAD','CDG']
+    airport_list = ['MSP', 'YYZ','BOS','LON','GIG','IXR','LED','NIO','HRM','MSY','PVG','SYD','MAD','CDG']
 
     loop_range = len(airport_list)
     temp = []
     # Loop builds list of (airport, passengers)
-    for i in range(random.randint(1,loop_range - 1)):
+    for i in range(random.randint(2,loop_range - 1)):
         # x chooses a random index from the airport list, y chooses a random number of passengers
         x = random.randint(0, len(airport_list) - 1)
         y = random.randint(1,10)

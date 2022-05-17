@@ -1,3 +1,4 @@
+from enum import Flag
 import pickle
 
 class flightGroup:
@@ -10,24 +11,18 @@ class flightGroup:
         self.dateUpperBound = dateUpperBound    # The date the group would like to return               FORMAT (string):    "YYYY-MM-DD"
         self.stayRange = stayRange              # The length the group would like to stay               FORMAT (tuple):     (INT, INT)
         self.email = email                      # The email address associated with the group           FORMAT (string):    "example@email.com"
-
         
         if groupOrigins is None:                # Home Airport-Passengers info                          FORMAT (list):      [("LAX", 3),...,("MAD", 5)]
             self.groupOrigins = []
         else: self.groupOrigins = groupOrigins
 
-    #TODO: at which point to throw an exception for invalid input?
-    #   before setting the attribute (self.destination = destionation, etc.)
-    #   or somewhere around save()?    
-
+    
     # Save pickles the instance
     #----------------------------------------------------------------------------------------------------------------------------------------------------
     def save(self): 
         with open('flightGroupData.pkl', 'ab') as FGhandler:
             pickle.dump(self, FGhandler)
-
-
-
+                
     # printinfo prints all information about the current group in a readable format
     #----------------------------------------------------------------------------------------------------------------------------------------------------
     def printinfo(self):
