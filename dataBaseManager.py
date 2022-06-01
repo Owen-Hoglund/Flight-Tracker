@@ -29,7 +29,7 @@ def createBetaTable():  # Creates flight_group_airport_list table
     cursor.execute(sqlstring)
     
 def createGammaTable(): # Creates flight_group_daily_price table
-    sqlstring = "CREATE TABLE flight_group_daily_price (email VARCHAR(50) NOT NULL, date VARCHAR(50) NOT NULL, price_departure int, price_return int)"
+    sqlstring = "CREATE TABLE flight_group_daily_price (email VARCHAR(50) NOT NULL, date VARCHAR(50) NOT NULL, price_departure int, price_return int, FOREIGN KEY(email) REFERENCES flightgroups(email)))"
     cursor.execute(sqlstring)
 # ----------------------------------------------------------------------------------------------------------------------------------------------------
 
