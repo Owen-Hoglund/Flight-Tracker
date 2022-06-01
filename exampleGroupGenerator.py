@@ -2,27 +2,19 @@ from flightGroupClassMk2 import flightGroup
 import random
 from datetime import date, timedelta
 import string
+import flightProjectHelper as utility
 
 # Creates a randomized flight group
 #----------------------------------------------------------------------------------------------------------------------
 def random_group_maker():
     orig_dest = origin_destination()
     temp_stayRange = range_generator()
-    temp_dateLowerBound = random_date_generator()
+    temp_dateLowerBound = utility.random_date_generator()
     temp_dateUpperBound = date_finder(temp_dateLowerBound , temp_stayRange)
     date_format = time_formatter(temp_dateLowerBound, temp_dateUpperBound)
     email = email_generator()
 
     return flightGroup(orig_dest[0], date_format[0], date_format[1], temp_stayRange, email, orig_dest[1])
-#----------------------------------------------------------------------------------------------------------------------
-
-
-
-# Generates a random date 
-#----------------------------------------------------------------------------------------------------------------------
-def random_date_generator():
-    x = random.randint(1, 365)
-    return date.today() + timedelta(days= x)
 #----------------------------------------------------------------------------------------------------------------------
 
 
@@ -66,9 +58,7 @@ def origin_destination():
 # Takes two dates and returns them as a tupple of strings in the format YYYY-MM-DD
 #----------------------------------------------------------------------------------------------------------------------
 def time_formatter(dateLowerBound, dateUpperBound):
-    d = dateLowerBound.strftime("%Y") + "-" + dateLowerBound.strftime("%m") + "-" + dateLowerBound.strftime("%d")
-    r = dateUpperBound.strftime("%Y") + "-" + dateUpperBound.strftime("%m") + "-" + dateUpperBound.strftime("%d")
-    return [d,r]
+    return [utility.date_time_to_str(dateLowerBound), utility.date_time_to_str(dateUpperBound)]
 #----------------------------------------------------------------------------------------------------------------------
 
 
@@ -82,7 +72,6 @@ def email_generator():
         temp_email += random.choice(string.ascii_letters)
     temp_email += '@gmail.com'
     return temp_email
-
 #----------------------------------------------------------------------------------------------------------------------
 
 

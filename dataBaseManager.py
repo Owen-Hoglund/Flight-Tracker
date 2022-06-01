@@ -1,7 +1,9 @@
+from re import S
 import mysql.connector
 import flightGroupClassMk2
 import groupHandlerClass
-from datetime import datetime
+from datetime import datetime, date, timedelta
+import flightProjectHelper as utility
 
 # Opens the connection to our database
 # ----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -14,73 +16,51 @@ db = mysql.connector.connect(
 cursor = db.cursor(buffered=True)
 # ----------------------------------------------------------------------------------------------------------------------------------------------------
 
-
-# TODO: Need to find a better place for this, something this basic should not be here it should be in a library of useful things
-# Converts the string date into datetime
+# These will recreate the main parent tables if there is a catastrophic failure or if I wipe all the data to start fresh
+# otherwise run these from a separate file to begin a new database for testing on another machine
 # ----------------------------------------------------------------------------------------------------------------------------------------------------
-def strToDateTime(exampleDate):
-    return datetime.strptime(exampleDate, "%Y-%m-%d")
-# ----------------------------------------------------------------------------------------------------------------------------------------------------
-
-# This will recreate the main parent table if there is a catastrophic failure or if I wipe all the data to start fresh
-
-
-def createAlphaTable():
-    sqlstring = "CREATE TABLE flightgroups (email VARCHAR(50) NOT NULL, date_lower_bound datetime NOT NULL, date_upper_bound datetime NOT NULL, destination VARCHAR(3) NOT NULL, stayRangeLow int NOT NULL, stayRangeHigh int NOT NULL, id int PRIMARY KEY NOT NULL AUTO_INCREMENT)"
+ 
+def createAlphaTable():  # CREATES flightgroup table
+    sqlstring = "CREATE TABLE flightgroups (email VARCHAR(50) NOT NULL, date_lower_bound datetime NOT NULL, date_upper_bound datetime NOT NULL, destination VARCHAR(3) NOT NULL, stayRangeLow int NOT NULL, stayRangeHigh int NOT NULL, PRIMARY KEY(email))"
     cursor.execute(sqlstring)
+    
+def createBetaTable():  # Creates flight_group_airport_list table
+    sqlstring = "CREATE TABLE flight_group_airport_list (email VARCHAR(50) NOT NULL, origin_airport VARCHAR(3) NOT NULL, passenger_count int NOT NULL, FOREIGN KEY(email) REFERENCES flightgroups(email))"
+    cursor.execute(sqlstring)
+    
+def createGammaTable(): # Creates flight_group_daily_price table
+    sqlstring = "CREATE TABLE flight_group_daily_price (email VARCHAR(50) NOT NULL, date VARCHAR(50) NOT NULL, price_departure int, price_return int)"
+    cursor.execute(sqlstring)
+# ----------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-# Takes in an instance of the group handler, then iterates over the groups contained within it
-# for each group adding a new row to the flightgroups table in SQL, then creates a "unique" table associated with each group
-# Named after the group email address, this table contains the airport-passengercount list associated with each group
+# The following block of code pushes all the data from a list of flightgroup objects (a 'handle') into the database
 # ----------------------------------------------------------------------------------------------------------------------------------------------------
 def groupTabler(handle):
+    
     # Iterates over groups in handler
     for group in handle.groups:
         # converts time string to datetime
-        low = strToDateTime(group.dateLowerBound)
-        high = strToDateTime(group.dateUpperBound)
+        low = utility.str_to_date_time(group.dateLowerBound)
+        high = utility.str_to_date_time(group.dateUpperBound)
 
         # inserts new group data row to the flightgroups table
-        cursor.execute("INSERT INTO flightgroups VALUES (%s,%s,%s,%s,%s,%s, NULL)", (
+        cursor.execute("INSERT INTO flightgroups VALUES (%s,%s,%s,%s,%s,%s)", (
             group.email, low, high, group.destination, group.stayRange[0], group.stayRange[1]))
-        # Creates new table for the airport-passenger list
-        cursor.execute("CREATE TABLE %s (outbound_airport VARCHAR(50), passenger_count int)" %
-                       group.email.removesuffix('@gmail.com'))
-
+        
         # iterates over the current groups originList
         for i in group.groupOrigins:
-            # Inserts each airport-passenger tuple to the newly created table
-            sqlstring = "INSERT INTO " + group.email.removesuffix(
-                '@gmail.com') + " VALUES ('" + str(i[0]) + "'," + str(int(i[1])) + ")"
+            # Inserts each airport-passenger tuple to the flight_group_airport_list
+            sqlstring = "INSERT INTO flight_group_airport_list (email, origin_airport, passenger_count) VALUES ('" + group.email + "', '" + str(i[0]) + "', " + str(int(i[1])) + ")"
             cursor.execute(sqlstring)
-    # finalizes all of the above changes to the database
+            
+        # Add dates into the flight_group_daily_price table for the current group
+        for day in utility.daterange(low, high):
+            sqlstring = "INSERT INTO flight_group_daily_price (email, date, price_departure, price_return) VALUES ('" + group.email + "', '" + utility.date_time_to_str(day) + "', 0, 0)"
+            # print('\n' + sqlstring + '\n')
+            cursor.execute(sqlstring)
+        
+    # finalizes all of the above changes to the database. Conveniently 
+    # if any errors occur in the above code none of these changes are
+    # committed and you are left with a clean database still
     db.commit()
-
-    # Selects every row from the flightgroups table, we are preparing to refresh the pickle jar
-    cursor.execute("SELECT * FROM flightgroups")
-    count = 1
-
-    # Creating a new handle instance to load flight groups into from the flightgroups table
-    newhandle = groupHandlerClass.handler()
-
-    # Now we are iterating over rows, preparing to extract data from the row
-    for i in cursor:
-        # Now we create a blank variable, a list which we will use to pass create a new flightGroup from
-        flightGroupArguments = []
-        for j in i:
-            flightGroupArguments.append(j)
-        cursor2 = db.cursor(buffered=True)
-        temptablename = str(i[0].removesuffix('@gmail.com'))
-        tempstring = "SELECT * FROM " + temptablename
-        cursor2.execute(tempstring)
-        tempOriginsList = []
-        for k in cursor2:
-            tempOriginsList.append(k)
-        tempflightgroup = flightGroupClassMk2.flightGroup(
-            flightGroupArguments[3], flightGroupArguments[1],
-            flightGroupArguments[2], (flightGroupArguments[4],
-                                      flightGroupArguments[5]), flightGroupArguments[0] + "@gmail.com",
-            tempOriginsList)
-        newhandle.groups.append(tempflightgroup)
-        newhandle.save()

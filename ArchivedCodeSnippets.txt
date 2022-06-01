@@ -49,3 +49,37 @@ def test_from_file(self):
 
         # Currently this will only work if the pkl file is not empty
         # I should later add a check to make certain that the file isnt empty before checking
+
+
+
+ # Selects every row from the flightgroups table, we are preparing to refresh the pickle jar
+    cursor.execute("SELECT * FROM flightgroups")
+    count = 1
+
+    # Creating a new handle instance to load flight groups into from the flightgroups table
+    newhandle = groupHandlerClass.handler()
+
+    # Now we are iterating over rows, preparing to extract data from the row
+    for i in cursor:
+        # Now we create a blank variable, a list which we will use to pass create a new flightGroup from
+        flightGroupArguments = []
+        for j in i:
+            flightGroupArguments.append(j)
+        
+        cursor2 = db.cursor(buffered=True)
+        
+        temptablename = str(i[0].removesuffix('@gmail.com'))
+        
+        tempstring = "SELECT * FROM " + temptablename
+        
+        cursor2.execute(tempstring)
+        tempOriginsList = []
+        for k in cursor2:
+            tempOriginsList.append(k)
+        tempflightgroup = flightGroupClassMk2.flightGroup(
+            flightGroupArguments[3], flightGroupArguments[1],
+            flightGroupArguments[2], (flightGroupArguments[4],
+                                      flightGroupArguments[5]), flightGroupArguments[0] + "@gmail.com",
+            tempOriginsList)
+        newhandle.groups.append(tempflightgroup)
+        newhandle.save()
