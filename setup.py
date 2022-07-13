@@ -20,16 +20,18 @@ def populate_groups():
     dataBaseManager.groupTabler(handler)
     del handler
 
-# In the future, this is where 
+# In the future, this is where you will connect to a flight price API to populate individual prices for 
+# all itineraries in the group
 def populate_prices_from_API():
     pass
 
-
+# For proof of concept, this generates completely random prices for flights.
 def populate_price_random_generator():
     handler = groupHandlerClass.handler()
     dataBaseManager.load(handler)
     dataBaseManager.populate_price_random_generator(handler)
     del handler
+
 
 
 first_time = input("Is this your first time runnning this software? (y/n) ")
