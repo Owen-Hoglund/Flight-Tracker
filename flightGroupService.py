@@ -90,35 +90,3 @@ if __name__ == '__main__':
     print(today-tdelta) # gives us the date from a week ago
     fourthOfJuly = datetime.date(2022, 7, 4) # no leading zeroes here
     print('Fourth of July:  {}'.format(fourthOfJuly))
-
-# https://www.programiz.com/python-programming/datetime/strftime
-
-# - dateLowerBound
-    # - The beginning of the range of dates the group is interested in travelling
-    # - Must be a string in the format YYYY-MM-DD
-        # either RegEx or a way to validate via datetime
-    # - Must be at least one day in the future (current date + one day)
-        # datetime.timedelta
-    # - Must be within a year of the current date
-    # - MM must be a valid entry
-    #     -Not greater than 12
-    #     -Not less than 1
-    #     -Months 1-9 must be formatted with a prefixed zero (sept = 09, sept != 9)
-    # - DD Must be a valid entry
-    #     - Not greater than the number of days in the associated month
-    #     - Not less than zero
-    #     - Same prefix zero rule as months (01, 02, etc,.)
-
-# - dateUpperBound
-#     - The end of the range of dates the group is interested in travelling
-#     - Must be a string in the format YYYY-MM-DD
-#     - Must be at least dateLowerBound + the upper bound of the stayRange
-        # datetime.timedelta
-#     - MM must be a valid entry
-#         - Not greater than 12
-#         - Not less than 1
-#         - Months 1-9 must be formatted with a prefixed zero (sept = 09, sept != 9)
-#     - DD Must be a valid entry
-#         - Not greater than the number of days in the associated month
-#         - Not less than zero
-#         - Same prefix zero rule as months (01, 02, etc,.)

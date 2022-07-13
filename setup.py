@@ -11,6 +11,7 @@ import exampleGroupGenerator
 import dataBaseManager
 
 # This will populate random groups on initialization of the database
+# ----------------------------------------------------------------------------------------------------------------------------------------------------
 def populate_groups():
     handler = groupHandlerClass.handler()
     for i in range(1):
@@ -19,21 +20,28 @@ def populate_groups():
         handler.newGroup(newGroup)
     dataBaseManager.groupTabler(handler)
     del handler
+# ----------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 # In the future, this is where you will connect to a flight price API to populate individual prices for 
 # all itineraries in the group
+# ----------------------------------------------------------------------------------------------------------------------------------------------------
 def populate_prices_from_API():
     pass
+# ----------------------------------------------------------------------------------------------------------------------------------------------------
+
+
 
 # For proof of concept, this generates completely random prices for flights.
+# ----------------------------------------------------------------------------------------------------------------------------------------------------
 def populate_price_random_generator():
     handler = groupHandlerClass.handler()
-    dataBaseManager.load(handler)
-    dataBaseManager.populate_price_random_generator(handler)
+    dataBaseManager.populate_price_random_generator()
     del handler
+# ----------------------------------------------------------------------------------------------------------------------------------------------------
 
-
-
+# The following code prompts a user to set up the database and populate it.
+# ----------------------------------------------------------------------------------------------------------------------------------------------------
 first_time = input("Is this your first time runnning this software? (y/n) ")
 print(first_time)
 while not ((first_time != 'y') or (first_time != 'n')):
@@ -59,10 +67,4 @@ else:
         price = input("Invalid Entry. Would you like to populate the price table with randomized prices? (y/n) ")
     if price == 'y':
         populate_price_random_generator()
-        
-# populatePrice = input("Would you like to populate the daily prices from given daily itinerary prices? (y/n) ")
-# while not ((populatePrice != 'y') or (populatePrice != 'n')):
-#     populatePrice = input("Invalid Entry. Would you like to populate the tables with 10 randomized entries? (y/n) ")
-# if populate == 'y':
-#     print("working")
 dataBaseManager.populate_daily_price()
