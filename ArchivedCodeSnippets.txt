@@ -83,3 +83,17 @@ def test_from_file(self):
             tempOriginsList)
         newhandle.groups.append(tempflightgroup)
         newhandle.save()
+
+
+
+
+cursor.execute("SELECT * FROM flight_group_airport_list WHERE email='" + group[0] + "'")
+            itineraries = cursor.fetchall()
+            for itinerary in itineraries:
+                cursor.execute("SELECT * FROM iata_iata_date_price WHERE iata1=%s and iata2=%s and date=%s", (group[3], group[1]), utility.date_time_to_str(day))
+                prices = cursor.fetchall()
+                for pair in prices:
+                    priceDeparture += pair[3]
+                    priceReturn += pair[4]
+            cursor.execute("UPDATE flight_group_daily_price SET price_departure=%s WHERE email=%s and date=%s", (priceDeparture, group[0], utility.date_time_to_str(day)))
+            cursor.execute("UPDATE flight_group_daily_price SET price_return=%s WHERE email=%s and date=%s", (priceReturn, group[0], utility.date_time_to_str(day)))

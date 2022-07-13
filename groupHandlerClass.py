@@ -10,36 +10,28 @@ from flightGroupClassMk2 import flightGroup
 class handler:
 
     def __init__(self, groups=None):
+        print("initializing")
         if groups == None:
             self.groups = []
         else:
             self.groups = groups
-
-    def load(self):
-        with open('flightGroupData.pkl', 'rb') as filehandler:
-            while True:
-                try:
-                     self.groups.append(pickle.load(filehandler))
-                except (EOFError, pickle.UnpicklingError):
-                    print("End of file Reached")
-                    break
+    
     
     # This FORMATS and rewrites the pickle file with 
-    def save(self):
-        with open('flightGroupData.pkl', 'wb') as FGhandler:
-            for i in self.groups:
-                pickle.dump(i, FGhandler)
-    
+    #def save(self):
+    #    with open('flightGroupData.pkl', 'wb') as FGhandler:
+     #       for i in self.groups:
+     #          pickle.dump(i, FGhandler)
     
     def newGroup(self, fgroup):
-        # flightGroup.printinfo()
         self.groups.append(fgroup)
     
-    @staticmethod
-    def printall(self):
-        for members in self.group:
-            print("-----------GROUP-------------")
-            members.printinfo()
+@staticmethod
+def printall(self):
+    for members in self.groups:
+        print("-----------GROUP-------------")
+        members.printinfo()
+        print("\n\n")
 
 
 

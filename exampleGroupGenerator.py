@@ -40,7 +40,7 @@ def origin_destination():
     for i in range(random.randint(2,loop_range - 1)):
         # x chooses a random index from the airport list, y chooses a random number of passengers
         x = random.randint(0, len(airport_list) - 1)
-        y = random.randint(1,10)
+        y = random.randint(1,5)
         
         # Add random airport-passenger count to list
         temp.append((airport_list[x], y))

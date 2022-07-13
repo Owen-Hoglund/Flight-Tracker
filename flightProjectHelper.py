@@ -28,3 +28,27 @@ def random_date_generator():
     x = random.randint(1, 365)
     return date.today() + timedelta(days= x)
 # ----------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Random Price Generator
+# ----------------------------------------------------------------------------------------------------------------------------------------------------
+def random_price_generator():
+    return random.randint(100, 1000)
+# ----------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+def iata_pair(iata1, iata2):
+    # Organize by Alpha
+    # Concatenate AAA-BBB
+    iata_list = [iata1, iata2]
+    iata_list.sort()
+    return iata_list[0] + "-" + iata_list[1]
+
+def departure_or_return(destination, iata_pair):
+    first = iata_pair[0:3]
+    if destination == first:
+        return "return"
+    else:
+        return "departure"
+
+# INSERT RANDOM FLIGHT PRICE DATA FOR TESTING PURPOSES
