@@ -27,7 +27,7 @@ in the dataBaseManager to work on your machine.
 - As of right now, I havent found a suitable API to populate the flight prices with real current data. For a number of reasons, I am choosing to
 forgo this for the time being: Firstly, I do not want to pay for an API for this project as it could become costly. Secondly, as a proof of concept,
 I implemented random data generation capability which is sufficient to prove the software works given real data. However, should I ever want to connect 
-an API, I believe it would take minimal effort to implement and no revision to the code, only the addition of a few new functions (API calls, a minimal
+an API, I believe it would take minimal effort to implement and no revision to the code, only the addition of a few new functions (API calls, minimal
 data processing). 
 
 ## File Guide
